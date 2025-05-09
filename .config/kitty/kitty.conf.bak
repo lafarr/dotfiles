@@ -1,0 +1,12 @@
+background_opacity .8
+background_blur 500
+cursor_shape beam
+font_family JetBrainsMono Nerd Font
+
+# BEGIN_KITTY_THEME
+# IR Black
+include current-theme.conf
+# END_KITTY_THEME
+
+cursor                  #ffffff
+cursor_text_color       #ffffff

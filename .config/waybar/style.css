@@ -1,0 +1,64 @@
+#waybar {
+	background-color: rgba(0, 0, 0, 0.6);
+	border-radius: 8px;
+	border: 0px;
+	font-size: 13px;
+	color: #ffffff;
+	font-family: JetBrainsMono Nerd Font;
+}
+
+.module {
+	padding: 0 8px;
+	margin: 0 2px;
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+#workspaces button {
+	padding: 0 6px;
+	color: #ffffff;
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+#workspaces button.active {
+	background-color: rgba(255, 255, 255, 0.2);
+	color: #ffffff;
+}
+
+#network {
+	color: #ffffff;
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+#network .label {
+	padding-left: 4px;
+}
+
+
+#bluetooth {
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+#battery {
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+#battery.good,
+#battery.warning,
+#battery.critical,
+#battery.charging,
+#battery.plugged {
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+
+#pulseaudio {
+	background-color: rgba(0, 0, 0, 0.0);
+}
+
+#pulseaudio .label {
+	padding-left: 4px;
+}
+
+#clock {
+	background-color: rgba(0, 0, 0, 0.0);
+}

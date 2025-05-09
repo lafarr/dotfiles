@@ -1,0 +1,14 @@
+format = "$directory$character"
+
+[directory]
+# Use $path to show the full path and add a space after it
+format = "[$path]($style) "
+style = "bold cyan" # Changed style to bold cyan for the whole path
+truncation_length = 0
+truncate_to_repo = false
+truncation_symbol = ""
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+

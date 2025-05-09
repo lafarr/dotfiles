@@ -1,0 +1,66 @@
+# hyperfine (time - benchmarking)
+# doggo (dns stuff)
+# procs (ps)
+# btop (top)
+# duf (df alternative)
+# bat (cat)
+# tldr (man)
+# fdfind (find)
+# ripgrep (grep)
+# exa (ls)
+# zoxide (cd)
+# lazygit
+# hexyl (hex viewer)
+
+function laptop() {
+	hyprctl keyword monitor eDP-1,enable 
+	hyprctl keyword monitor HDMI-A-1,disable 
+}
+
+function monitor() {
+	hyprctl keyword monitor eDP-1,disable 
+	hyprctl keyword monitor HDMI-A-1,enable 
+}
+
+function fix_cursor() {
+	echo -e -n "\x1b[\x36 q"
+}
+
+function disas() {
+	if [ -n "$1" ]; then
+		objdump -d $1 -M intel | nvim -c "set filetype=asm"
+	fi
+}
+
+function sesh() {
+	curr_session=$(tmux display-message -p '#S')
+	choice=$(tmux ls | awk -v current_session="$curr_session" -F ':' '$1 != current_session { print $1 }' | fzf)
+	if [ -n "$choice" ]; then
+		if [ -n "$TMUX" ]; then
+			tmux switch -t "$choice"
+		else
+			tmux attach -t "$choice"
+		fi
+	fi
+}
+
+export STARSHIP_CONFIG=$HOME/.config/starship.toml
+export MASON=$HOME/.local/share/nvim/mason
+export FZF_DEFAULT_COMMAND='fd --hidden --no-ignore'
+
+# Base path
+export PATH=/home/lafarr/.nvm/versions/node/v24.0.0/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+
+bindkey '^L' autosuggest-accept
+bindkey '^H' backward-kill-word
+alias fix_cursor="fix_cursor"
+alias laptop="laptop"
+alias monitor="monitor"
+alias cd="z"
+alias v="nvim"
+alias ls="exa -a --header --color=always --group-directories-first"
+alias cat="bat"
+alias specs="neofetch"
+alias rg="rg -i --hidden --no-ignore --column --pretty --trim --with-filename --stats"
+alias fd='fd --hidden --no-ignore'
+alias hex='hexyl'

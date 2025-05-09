@@ -1,0 +1,105 @@
+{
+  "layer": "top",
+  "position": "top",
+  "margin-top": 8,
+  "margin-bottom": 8,
+  "margin-left": 8,
+  "margin-right": 8,
+  "height": 34,
+  "spacing": 0,
+
+  "border-radius": 8,
+  "border": "0px",
+
+  "font_family": "JetBrainsMono Nerd Font Mono",
+  "font_size": 13,
+
+  "gtk-layer-shell": true,
+
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+
+  "modules-center": [
+    "clock"
+  ],
+
+  "modules-right": [
+    "bluetooth",
+    "network",
+    "battery",
+    "pulseaudio"
+  ],
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{id}",
+    "active-only": false,
+    "persistent_workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": []
+    },
+    "format-icons": {
+      "active": "",
+      "default": ""
+    }
+  },
+
+  "network": {
+    "interface": "wlan0", 
+    "format-wireless": "  {essid}",
+    "format-ethernet": "  {ipaddr}/{cidr}",
+    "format": "  {essid}",
+    "tooltip-wireless": "{essid} ({signalStrength}%)",
+    "tooltip-ethernet": "{ipaddr}",
+    "format-linked": " {ifname} (No IP)",
+    "format-disconnected": " Disconnected",
+    "on-click": "~/.local/bin/wofi_wifi"
+  },
+
+  "bluetooth": {
+    "format": " {num_connections}",
+    "format-connected": " {num_connections} {device_alias}",
+    "format-off": " Off",
+    "tooltip-status": "Bluetooth: {status}",
+    "tooltip-connected": "Connected to {device_alias} ({device_address})",
+    "on-click": "~/.local/bin/wofi_bluetooth"
+  },
+
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-charging": "{capacity}%",
+    "format-plugged": "{capacity}%",
+    "format-alt": "{icon} {time}",
+    "states": {
+      "good": 90,
+      "warning": 30,
+      "critical": 15
+    },
+    "format-icons": ["", "", "", "", ""],
+    "bat": "BAT0", 
+  },
+
+"pulseaudio": {
+    "format": "  {volume}%",
+    // Changed format-muted to display a muted icon with a slash (using  as an example)
+    "format-muted": "",
+    "tooltip": "Volume: {volume}%",
+    "on-click": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+    "scroll-step": 5
+  },
+  "clock": {
+    "format": "{:%I:%M %p | %A, %B %d}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  }
+}
+
