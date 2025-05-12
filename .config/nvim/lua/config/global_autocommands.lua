@@ -1,20 +1,4 @@
-vim.api.nvim_create_autocmd("ColorScheme", {
-	pattern = "*",
-	callback = function()
-		vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
-		-- Clear markdown-specific highlights
-		local md_groups = { "markdownCode", "@text.literal", "@markup.raw.block" }
-		for _, group in ipairs(md_groups) do
-			vim.api.nvim_set_hl(0, group, { bg = "NONE" })
-		end
-	end
-})
-
--- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
 	desc = 'Highlight when yanking (copying) text',
 	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -23,13 +7,35 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	end,
 })
 
-vim.cmd('autocmd BufEnter * set formatoptions-=cro')
-vim.cmd('autocmd BufEnter * setlocal formatoptions-=cro')
+-- Get rid of the annoying auto-insertion of comment indicators
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*",
+	command = "set formatoptions-=cro",
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*",
+	command = "setlocal formatoptions-=cro",
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
 	callback = function(args)
-		-- local hierarchy = require('hierarchy')
-		-- hierarchy.setup({ depth = 10000 })
+		local bufnr = args.buf
+		vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = 'rounded' }) end, { buffer = bufnr })
+		vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr })
+		vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { buffer = bufnr })
+		vim.keymap.set({ 'n', 'x' }, '<leader>fd', function() vim.lsp.buf.format({ async = true }) end,
+			{ buffer = bufnr })
+		vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr })
+		vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float({ border = 'rounded', source = true }) end,
+			{ buffer = bufnr, desc = 'Show [E]rror' })
+		vim.keymap.set("n", "<leader>ne",
+			function() vim.diagnostic.goto_next({ float = { border = 'rounded', source = true } }) end,
+			{ desc = '[N]ext [E]rror', buffer = bufnr })
+		vim.keymap.set("n", "<leader>pe",
+			function() vim.diagnostic.goto_prev({ float = { border = 'rounded', source = true } }) end,
+			{ buffer = bufnr, desc = '[P]revious [E]rror' })
+		vim.keymap.set('i', '<C-k>', function() vim.lsp.buf.signature_help({ border = 'rounded', focusable = false }) end)
 
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
 		if not client then return end
@@ -43,26 +49,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
 					filetype == "cc" or filetype == "cxx"
 
 				if is_cpp_related then
-					-- Try to use clang-format first
 					local clang_format_exists = vim.fn.executable('clang-format') == 1
 					if clang_format_exists then
-						-- Get the current cursor position
 						local cursor_pos = vim.api.nvim_win_get_cursor(0)
 						-- Format the entire buffer with clang-format
 						vim.cmd('silent! %!clang-format')
-						-- Restore cursor position
 						vim.api.nvim_win_set_cursor(0, cursor_pos)
 					elseif client.supports_method('textDocument/formatting') then
 						-- Fall back to LSP formatting if clang-format is not available
 						pcall(function() vim.lsp.buf.format({ bufnr = args.buf, id = client.id }) end)
 					end
 				elseif client.supports_method('textDocument/formatting') then
-					-- For non-C++ files, use LSP formatting
 					pcall(function() vim.lsp.buf.format({ bufnr = args.buf, id = client.id }) end)
 				end
 			end
 		})
 	end
 })
-
-vim.lsp.set_log_level("debug")

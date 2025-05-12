@@ -2,6 +2,11 @@ require("config.lazy")
 require("config.remaps")
 require("config.global_settings")
 require("config.global_autocommands")
+require('config.lsp.bashls')
+require('config.lsp.luals')
+require('config.lsp.pythonls')
+require('config.lsp.gols')
+require('config.lsp.typescriptls')
 
 require 'nvim-treesitter.configs'.setup {
 	-- A list of parser names, or "all" (the listed parsers MUST always be installed)

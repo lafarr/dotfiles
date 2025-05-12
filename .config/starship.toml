@@ -1,4 +1,5 @@
-format = "$directory$character"
+format = "$directory$git_branch$cmd_duration$character"
+right_format = "$username@$hostname"
 
 [directory]
 # Use $path to show the full path and add a space after it
@@ -12,3 +13,14 @@ truncation_symbol = ""
 success_symbol = "[➜](bold green)"
 error_symbol = "[➜](bold red)"
 
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+
+[hostname]
+ssh_only = false
+format = '[$ssh_symbol$hostname]($style)'
+
+[username] 
+show_always = true
+format = '[$user]($style)'

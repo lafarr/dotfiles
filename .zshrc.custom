@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # hyperfine (time - benchmarking)
 # doggo (dns stuff)
 # procs (ps)
@@ -28,19 +30,23 @@ function fix_cursor() {
 
 function disas() {
 	if [ -n "$1" ]; then
-		objdump -d $1 -M intel | nvim -c "set filetype=asm"
+		objdump -d "$1" -M intel | nvim -c "set filetype=asm"
 	fi
 }
 
 function sesh() {
-	curr_session=$(tmux display-message -p '#S')
-	choice=$(tmux ls | awk -v current_session="$curr_session" -F ':' '$1 != current_session { print $1 }' | fzf)
-	if [ -n "$choice" ]; then
-		if [ -n "$TMUX" ]; then
-			tmux switch -t "$choice"
-		else
-			tmux attach -t "$choice"
+	list=$(tmux ls 2>/dev/null)
+	if [ -n "$list" ]; then
+		choice=$(tmux ls | awk -F ':' '{ print $1 }' | fzf)
+		if [ -n "$choice" ]; then
+			if [ -n "$TMUX" ]; then
+				tmux switch -t "$choice"
+			else
+				tmux attach -t "$choice"
+			fi
 		fi
+	else
+		echo "tmux ain't runnin' son'"
 	fi
 }
 
@@ -50,6 +56,11 @@ export FZF_DEFAULT_COMMAND='fd --hidden --no-ignore'
 
 # Base path
 export PATH=/home/lafarr/.nvm/versions/node/v24.0.0/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
+
+# For i-beam in tmux
+echo -e "\x1b[6 q"
 
 bindkey '^L' autosuggest-accept
 bindkey '^H' backward-kill-word

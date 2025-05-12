@@ -26,13 +26,22 @@ return {
 			"0",
 		}
 
+		local selene = require('lint').linters.selene
+		selene.args = {
+			"--config",
+			"/home/james/.config/nvim/vim.yaml"
+		}
+
 		lint.linters_by_ft = {
-			javascript = { 'eslint_d' },
-			typescript = { 'eslint_d' },
-			typescriptreact = { 'eslint_d' },
-			javascriptreact = { 'eslint_d' },
-			go = { 'golangcilint' },
-			lua = { 'luac', 'luacheck' },
+			javascript = { 'eslint_d', 'jshint' },
+			typescript = { 'eslint_d', 'jshint' },
+			typescriptreact = { 'eslint_d', 'jshint' },
+			javascriptreact = { 'eslint_d', 'jshint' },
+			go = { 'golangcilint', 'revive' },
+			lua = { 'luac', 'luacheck', 'selene' },
+			zsh = { 'zsh', 'shellcheck' },
+			sh = { 'bash', 'shellcheck' },
+			html = { 'htmlhint' }
 		}
 
 		vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
