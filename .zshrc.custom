@@ -64,6 +64,7 @@ echo -e "\x1b[6 q"
 
 bindkey '^L' autosuggest-accept
 bindkey '^H' backward-kill-word
+
 alias fix_cursor="fix_cursor"
 alias laptop="laptop"
 alias monitor="monitor"
@@ -75,3 +76,5 @@ alias specs="neofetch"
 alias rg="rg -i --hidden --no-ignore --column --pretty --trim --with-filename --stats"
 alias fd='fd --hidden --no-ignore'
 alias hex='hexyl'
+alias rm='trash'
+alias mkdir='mkdir -p'

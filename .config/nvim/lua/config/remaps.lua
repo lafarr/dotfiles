@@ -35,6 +35,30 @@ vim.keymap.set('i', ']', function()
 	end
 end, { expr = true })
 
+vim.keymap.set('i', '(', function()
+	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == "(" then
+		return "<Right>"
+	else
+		return "("
+	end
+end, { expr = true })
+
+vim.keymap.set('i', '{', function()
+	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == "{" then
+		return "<Right>"
+	else
+		return "{"
+	end
+end, { expr = true })
+
+vim.keymap.set('i', '[', function()
+	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == "[" then
+		return "<Right>"
+	else
+		return "["
+	end
+end, { expr = true })
+
 vim.keymap.set('i', '"', function()
 	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == '"' then
 		return "<Right>"

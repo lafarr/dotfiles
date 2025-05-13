@@ -66,3 +66,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		})
 	end
 })
+
+-- Always open help files full screen
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function()
+		if vim.bo.filetype == 'help' then
+			local keys = vim.api.nvim_replace_termcodes('<C-w>o', true, false, true)
+			vim.api.nvim_feedkeys(keys, 'm', false)
+		end
+	end
+})

@@ -2,30 +2,14 @@ require("config.lazy")
 require("config.remaps")
 require("config.global_settings")
 require("config.global_autocommands")
-require('config.lsp.bashls')
-require('config.lsp.luals')
-require('config.lsp.pythonls')
-require('config.lsp.gols')
-require('config.lsp.typescriptls')
 
-require 'nvim-treesitter.configs'.setup {
-	-- A list of parser names, or "all" (the listed parsers MUST always be installed)
-	ensure_installed = { "cpp", "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+-- Configure and enable LSPs
+local lsp_dir = vim.fn.stdpath('config') .. '/lua/config/lsp'
 
-	-- Install parsers synchronously (only applied to `ensure_installed`)
-	sync_install = false,
-
-	-- Automatically install missing parsers when entering buffer
-	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-	auto_install = true,
-
-	highlight = {
-		enable = true,
-
-		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-		-- Using this option may slow down your editor, and you may see some duplicate highlights.
-		-- Instead of true it can also be a list of languages
-		additional_vim_regex_highlighting = false,
-	},
-}
+for _, filename in ipairs(vim.fn.readdir(lsp_dir)) do
+	local file_name_without_extension = vim.split(filename, '.', { plain = true, trimempty = true })[1]
+	local require_path = 'config.lsp.' .. file_name_without_extension
+	local lsp_cfg = require(require_path)
+	vim.lsp.config(file_name_without_extension, lsp_cfg)
+	vim.lsp.enable(file_name_without_extension)
+end

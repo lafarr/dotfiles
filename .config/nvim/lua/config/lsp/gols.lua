@@ -14,9 +14,7 @@ local function get_root(fname)
 	return vim.fs.root(fname, { 'go.work', 'go.mod', '.git' })
 end
 
-local name = 'gopls'
-
-vim.lsp.config(name, {
+return {
 	cmd = { os.getenv('MASON') .. '/bin/gopls' },
 	filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
 	root_dir = function(bufnr, on_dir)
@@ -38,6 +36,4 @@ vim.lsp.config(name, {
 			end
 		end)
 	end,
-})
-
-vim.lsp.enable(name)
+}

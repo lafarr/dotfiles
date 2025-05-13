@@ -9,9 +9,7 @@
 ---
 --- Language server for bash, written using tree sitter in typescript.
 
-local name = 'bashls'
-
-vim.lsp.config(name, {
+return {
 	cmd = { os.getenv('MASON') .. '/bin/bash-language-server', 'start' },
 	settings = {
 		bashIde = {
@@ -20,6 +18,4 @@ vim.lsp.config(name, {
 	},
 	filetypes = { 'bash', 'sh', 'zsh' },
 	root_markers = { '.git' },
-})
-
-vim.lsp.enable(name)
+}

@@ -4,9 +4,7 @@
 ---
 --- `pyright`, a static type checker and language server for python
 
-local name = 'pyright'
-
-vim.lsp.config(name, {
+return {
 	cmd = { os.getenv('MASON') .. '/bin/pyright-langserver', '--stdio' },
 	filetypes = { 'python' },
 	root_markers = {
@@ -39,6 +37,4 @@ vim.lsp.config(name, {
 			desc = 'Organize Imports',
 		})
 	end,
-})
-
-vim.lsp.enable(name)
+}

@@ -4,8 +4,7 @@
 --- [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) or
 --- [`jsconfig.json`](https://code.visualstudio.com/docs/languages/jsconfig) to the root of your
 --- project.
-local name = 'typescript-language-server'
-vim.lsp.config(name, {
+return {
 	init_options = { hostInfo = 'neovim' },
 	cmd = { 'typescript-language-server', '--stdio' },
 	filetypes = {
@@ -47,6 +46,4 @@ vim.lsp.config(name, {
 			})
 		end, {})
 	end,
-})
-
-vim.lsp.enable(name)
+}

@@ -1,6 +1,6 @@
 local name = 'luals'
 
-vim.lsp.config(name, {
+return {
 	cmd = { os.getenv("MASON") .. '/bin/lua-language-server' },
 	filetypes = { 'lua' },
 	root_markers = {
@@ -27,6 +27,4 @@ vim.lsp.config(name, {
 			}
 		}
 	}
-})
-
-vim.lsp.enable(name)
+}
