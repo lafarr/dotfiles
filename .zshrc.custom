@@ -50,6 +50,10 @@ function sesh() {
 	fi
 }
 
+function curr_sesh() {
+	tmux display-message -p '#S'
+}
+
 export STARSHIP_CONFIG=$HOME/.config/starship.toml
 export MASON=$HOME/.local/share/nvim/mason
 export FZF_DEFAULT_COMMAND='fd --hidden --no-ignore'

@@ -20,7 +20,29 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 vim.api.nvim_create_autocmd('LspAttach', {
 	callback = function(args)
+		vim.diagnostic.config({
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = "",
+					[vim.diagnostic.severity.WARN] = "",
+					[vim.diagnostic.severity.INFO] = "",
+					[vim.diagnostic.severity.HINT] = "",
+				},
+				numhl = {
+					[vim.diagnostic.severity.ERROR] = "",
+					[vim.diagnostic.severity.WARN] = "",
+					[vim.diagnostic.severity.HINT] = "",
+					[vim.diagnostic.severity.INFO] = "",
+				},
+			},
+		})
+
+		vim.api.nvim_create_user_command('LspInfo', function()
+			vim.cmd('checkhealth vim.lsp')
+		end, {})
+
 		local bufnr = args.buf
+
 		vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = 'rounded' }) end, { buffer = bufnr })
 		vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr })
 		vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { buffer = bufnr })

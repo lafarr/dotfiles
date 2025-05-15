@@ -9,7 +9,6 @@ vim.keymap.set('n', '<C-i>', '<C-i>zz', { desc = 'General: Go to next item in ju
 vim.keymap.set("i", "<C-BS>", "<C-W>", { desc = 'General: Delete word backwards' })
 vim.keymap.set("i", "<C-h>", "<C-W>", { desc = 'General: Delete word backwards' })
 vim.keymap.set("n", "H", "<C-w>o", { desc = 'General: Full screen help file' })
-vim.keymap.set("n", "<leader>fe", "<cmd>Ex<cr>", { desc = 'General: Open NETRW' })
 
 vim.keymap.set('i', ')', function()
 	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == ")" then

@@ -1,5 +1,20 @@
 local name = 'luals'
 
+vim.diagnostic.config({
+	signs = {
+		Error = "",
+		Warn = "lmao",
+		Info = "",
+		Hint = "",
+	},
+	severity_highlights = {
+		Error = "DiagnosticSignError",
+		Warn = "DiagnosticSignWarn",
+		Info = "DiagnosticSignInfo",
+		Hint = "DiagnosticSignHint",
+	},
+})
+
 return {
 	cmd = { os.getenv("MASON") .. '/bin/lua-language-server' },
 	filetypes = { 'lua' },

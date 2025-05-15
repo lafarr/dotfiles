@@ -4,6 +4,7 @@ vim.cmd('set nowrap')
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.o.signcolumn = "yes"
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -36,6 +37,7 @@ vim.opt.list = false
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
+-- TODO: Move this to config of dap
 -- Debugging stuff
 vim.api.nvim_set_hl(0, "red", { fg = "#FF0000" })
 vim.api.nvim_set_hl(0, "green", { fg = "#9ece6a" })

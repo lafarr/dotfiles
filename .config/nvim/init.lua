@@ -1,7 +1,7 @@
 require("config.lazy")
 require("config.remaps")
-require("config.global_settings")
 require("config.global_autocommands")
+require("config.global_settings")
 
 -- Configure and enable LSPs
 local lsp_dir = vim.fn.stdpath('config') .. '/lua/config/lsp'
