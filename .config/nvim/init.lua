@@ -1,3 +1,5 @@
+vim.g.resume = false
+
 require("config.lazy")
 require("config.remaps")
 require("config.global_autocommands")
@@ -13,3 +15,10 @@ for _, filename in ipairs(vim.fn.readdir(lsp_dir)) do
 	vim.lsp.config(file_name_without_extension, lsp_cfg)
 	vim.lsp.enable(file_name_without_extension)
 end
+
+-- Pretty print for debugging
+_G.dd = function(...)
+	require('snacks').debug.inspect(...)
+end
+
+vim.print = _G.dd

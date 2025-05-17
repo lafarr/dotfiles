@@ -29,7 +29,7 @@ return {
 		local selene = require('lint').linters.selene
 		selene.args = {
 			"--config",
-			"/home/james/.config/nvim/vim.yaml"
+			vim.fn.stdpath('config')
 		}
 
 		lint.linters_by_ft = {

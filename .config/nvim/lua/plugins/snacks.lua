@@ -2,6 +2,9 @@ return {
 	"folke/snacks.nvim",
 	lazy = false,
 	opts = {
+		rename = {},
+		image = {},
+		bigfile = {},
 		indent = {
 			enabled = true
 		},
@@ -10,18 +13,6 @@ return {
 		},
 		picker = {
 			enabled = true,
-			sources = {
-				explorer = {
-					jump = {
-						close = true
-					},
-					layout = {
-						preset = 'default'
-					},
-					hidden = true,
-					ignored = true
-				}
-			}
 		},
 		input = {
 			enabled = true
@@ -35,7 +26,8 @@ return {
 				close = true
 			},
 			auto_close = true,
-		}
+		},
+		lazygit = {}
 	},
 	keys = {
 		{ '<leader>wl', function() require("snacks").lazygit.log() end,      { 'n' }, desc = 'Snacks: Open Git [w]orkspace [l]og' },
@@ -117,7 +109,7 @@ return {
 				})
 			end,
 			{ 'n' },
-			desc = 'Snacks: Search [k]eymap[s]'
+			desc = 'Snacks: Search [k]ey[m]aps'
 		},
 		{
 			'<leader>ws',
@@ -278,5 +270,12 @@ return {
 			{ 'n' },
 			desc = 'Snacks: Search [G]it [b]ranches'
 		},
+		{
+			'<leader>lg',
+			function()
+				require('snacks').lazygit()
+			end,
+			desc = 'Snacks: Open [l]azy[g]it'
+		}
 	},
 }

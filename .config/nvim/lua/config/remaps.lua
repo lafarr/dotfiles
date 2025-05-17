@@ -10,6 +10,19 @@ vim.keymap.set("i", "<C-BS>", "<C-W>", { desc = 'General: Delete word backwards'
 vim.keymap.set("i", "<C-h>", "<C-W>", { desc = 'General: Delete word backwards' })
 vim.keymap.set("n", "H", "<C-w>o", { desc = 'General: Full screen help file' })
 
+-- This has a related autocommand in global_autocommands.lua
+vim.keymap.set('i', '<C-s>', function()
+	if Signature_visible and Signature_win_id ~= nil then
+		if vim.api.nvim_win_is_valid(Signature_win_id) then
+			vim.api.nvim_win_close(Signature_win_id, true)
+		end
+		Signature_visible = false
+		Signature_win_id = nil
+	else
+		vim.lsp.buf.signature_help({ focusable = false, border = 'rounded' })
+	end
+end)
+
 vim.keymap.set('i', ')', function()
 	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == ")" then
 		return "<Right>"
@@ -66,6 +79,14 @@ vim.keymap.set('i', '"', function()
 	end
 end, { expr = true })
 
+vim.keymap.set('i', "'", function()
+	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == "'" then
+		return "<Right>"
+	else
+		return "'"
+	end
+end, { expr = true })
+
 vim.keymap.set('i', '>', function()
 	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == '>' then
 		return "<Right>"
@@ -98,24 +119,21 @@ vim.keymap.set('n', 'a', function()
 	end
 end, { expr = true })
 
--- Function to handle 'o' command: insert <count> lines below and stay in Normal mode
 vim.keymap.set('n', 'o', function()
-	local count = vim.v.count1 -- Get the count (defaults to 1 if no number is provided)
+	local count = vim.v.count1
 	local lines = {}
 	for i = 1, count do
 		lines[i] = ''
 	end
 	vim.api.nvim_buf_set_lines(0, vim.fn.line('.'), vim.fn.line('.'), false, lines)
-	-- Move cursor down by 'count' lines to the first new line
 	vim.api.nvim_win_set_cursor(0, { vim.fn.line('.') + count, 0 })
 	local keys = vim.api.nvim_replace_termcodes('i', true, false, true)
 	vim.api.nvim_feedkeys(keys, 'm', false)
 end, { noremap = true, silent = true, desc = 'Insert <count> lines below and stay in Normal mode' })
 
 
--- Function to handle 'O' command: insert <count> lines above and stay in Normal mode
 vim.keymap.set('n', 'O', function()
-	local count = vim.v.count1 -- Get the count (defaults to 1 if no number is provided)
+	local count = vim.v.count1
 	local lines = {}
 	for i = 1, count do
 		lines[i] = ''

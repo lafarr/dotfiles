@@ -8,7 +8,5 @@ return {
 	config = function(_, opts)
 		require('catppuccin').setup(opts)
 		vim.cmd('colorscheme catppuccin-mocha')
-		-- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#ffffff", bg = "#1e1e2e" })
-		-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1e1e2e" })
 	end
 }
