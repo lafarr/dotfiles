@@ -8,11 +8,6 @@ vim.keymap.set('n', '<C-o>', '<C-o>zz', { desc = 'General: Go to previous item i
 vim.keymap.set('n', '<C-i>', '<C-i>zz', { desc = 'General: Go to next item in jump list' })
 vim.keymap.set("i", "<C-BS>", "<C-W>", { desc = 'General: Delete word backwards' })
 vim.keymap.set("i", "<C-h>", "<C-W>", { desc = 'General: Delete word backwards' })
-vim.keymap.set("n", "H", "<C-w>o", { desc = 'General: Full screen help file' })
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = 'General: Switch to left vertical split' })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = 'General: Switch to right vertical split' })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = 'General: Switch to bottom split' })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = 'General: Switch to top split' })
 
 vim.keymap.set('i', ')', function()
 	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == ")" then

@@ -5,6 +5,6 @@ return {
 		enabled = false
 	},
 	keys = {
-		{ '<leader>tgb', '<cmd>GitBlameToggle<cr>', desc = 'Git: [T]oggle [G]it [b]lame' }
+		{ '<leader>tgb', function() vim.cmd('GitBlameToggle') end, desc = 'Git: [T]oggle [G]it [b]lame' }
 	}
 }

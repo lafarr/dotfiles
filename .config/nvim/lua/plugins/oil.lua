@@ -2,7 +2,7 @@ return {
 	"stevearc/oil.nvim",
 	lazy = false,
 	keys = {
-		{ '<leader>fe', '<cmd>Oil<cr>', desc = 'Oil: Open Oil' }
+		{ '<leader>fe', function() require('oil').open() end, desc = 'Oil: Open Oil' }
 	},
 	opts = {
 		delete_to_trash = true,

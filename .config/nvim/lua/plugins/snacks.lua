@@ -47,7 +47,7 @@ return {
 			function()
 				Snacks.picker.files({
 					hidden = true,
-					ignored = false,
+					ignored = true,
 					layout = {
 						preset = 'select',
 						preview = false
@@ -59,9 +59,9 @@ return {
 		{
 			'<leader>gf',
 			function()
-				Snacks.picker.files({
+				Snacks.picker.git_files({
 					hidden = true,
-					ignored = false,
+					ignored = true,
 					layout = {
 						preset = 'select',
 						preview = false
@@ -121,7 +121,7 @@ return {
 			function()
 				Snacks.picker.grep({
 					hidden = true,
-					ignored = false,
+					ignored = true,
 					layout = {
 						preset = 'default',
 					}
@@ -133,7 +133,7 @@ return {
 			'<leader>fws',
 			function()
 				vim.ui.input({ prompt = 'Patterns' }, function(patterns_str)
-					if string.len(patterns_str) then
+					if patterns_str and patterns_str:len() then
 						local patterns = {}
 						local i = 1
 						for token in string.gmatch(patterns_str, "[^%s]+") do
