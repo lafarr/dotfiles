@@ -2,9 +2,18 @@ return {
 	"folke/snacks.nvim",
 	lazy = false,
 	opts = {
-		rename = {},
-		image = {},
-		bigfile = {},
+		scope = {
+			enabled = true
+		},
+		rename = {
+			enabled = true
+		},
+		image = {
+			enabled = true
+		},
+		bigfile = {
+			enabled = true
+		},
 		indent = {
 			enabled = true
 		},
@@ -15,42 +24,28 @@ return {
 			enabled = true,
 		},
 		input = {
-			enabled = true
-		},
-		statuscolumn = {
-			enabled = true
+			enabled = true,
+			height = 50
 		},
 		explorer = {
+			enabled = true,
 			replace_netrw = false,
 			jump = {
 				close = true
 			},
 			auto_close = true,
 		},
-		lazygit = {}
+		lazygit = {
+			enabled = true
+		}
 	},
 	keys = {
-		{ '<leader>wl', function() require("snacks").lazygit.log() end,      { 'n' }, desc = 'Snacks: Open Git [w]orkspace [l]og' },
-		{ '<leader>dl', function() require("snacks").lazygit.log_file() end, { 'n' }, desc = 'Snacks: Open Git [d]ocument [l]og' },
+		{ '<leader>wl', function() Snacks.lazygit.log() end,      { 'n' }, desc = 'Snacks: Open Git [w]orkspace [l]og' },
+		{ '<leader>dl', function() Snacks.lazygit.log_file() end, { 'n' }, desc = 'Snacks: Open Git [d]ocument [l]og' },
 		{
 			'<leader>pf',
 			function()
-				require("snacks").picker.files({
-					hidden = true,
-					ignored = true,
-					layout = {
-						preset = 'select',
-						preview = false
-					}
-				})
-			end,
-			{ 'n' },
-			desc = 'Snacks: Search [p]roject [f]iles'
-		},
-		{
-			'<leader>gf',
-			function()
-				require("snacks").picker.files({
+				Snacks.picker.files({
 					hidden = true,
 					ignored = false,
 					layout = {
@@ -59,13 +54,26 @@ return {
 					}
 				})
 			end,
-			{ 'n' },
+			desc = 'Snacks: Search [p]roject [f]iles'
+		},
+		{
+			'<leader>gf',
+			function()
+				Snacks.picker.files({
+					hidden = true,
+					ignored = false,
+					layout = {
+						preset = 'select',
+						preview = false
+					}
+				})
+			end,
 			desc = 'Snacks: Search [G]it [f]iles'
 		},
 		{
 			'<leader>cs',
 			function()
-				require("snacks").picker.files({
+				Snacks.picker.files({
 					hidden = true,
 					ignored = true,
 					dirs = {
@@ -77,13 +85,12 @@ return {
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: Search vim [c]onfig file[s]'
 		},
 		{
 			'<leader>gcs',
 			function()
-				require("snacks").picker.files({
+				Snacks.picker.files({
 					hidden = true,
 					ignored = true,
 					dirs = {
@@ -95,187 +102,187 @@ return {
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: Search [g]lobal [c]onfig file[s]'
 		},
 		{
 			'<leader>km',
 			function()
-				require('snacks').picker.keymaps({
+				Snacks.picker.keymaps({
 					layout = {
 						preview = false,
 						preset = 'select'
-					}
+					},
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: Search [k]ey[m]aps'
 		},
 		{
 			'<leader>ws',
 			function()
-				require("snacks").picker.grep({
+				Snacks.picker.grep({
 					hidden = true,
-					ignored = true,
+					ignored = false,
 					layout = {
 						preset = 'default',
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: [W]orkspace [s]earch'
 		},
 		{
 			'<leader>fws',
 			function()
-				local pattern = vim.ui.input({ prompt = 'Patterns' }, function(patterns_str)
-					local patterns = {}
-					local i = 1
-					for token in string.gmatch(patterns_str, "[^%s]+") do
-						patterns[i] = token
-						i = i + 1
+				vim.ui.input({ prompt = 'Patterns' }, function(patterns_str)
+					if string.len(patterns_str) then
+						local patterns = {}
+						local i = 1
+						for token in string.gmatch(patterns_str, "[^%s]+") do
+							patterns[i] = token
+							i = i + 1
+						end
+						Snacks.picker.grep({
+							hidden = true,
+							ignored = true,
+							layout = {
+								preset = 'default',
+							},
+							glob = patterns
+						})
 					end
-					require("snacks").picker.grep({
-						hidden = true,
-						ignored = true,
-						layout = {
-							preset = 'default',
-						},
-						glob = patterns
-					})
 				end)
 			end,
-			{ 'n' },
 			desc = 'Snacks: [F]iltered [w]orkspace [s]earch'
 		},
 		{
 			'<leader>hp',
 			function()
-				require("snacks").picker.help({
+				Snacks.picker.help({
 					layout = {
 						preset = "select"
 					},
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: Search [h]el[p]'
 		},
 		{
 			'<leader>ds',
 			function()
-				require("snacks").picker.lines({
+				Snacks.picker.lines({
 					layout = {
 						preset = 'default'
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: [D]ocument [s]earch'
 		},
 		{
 			'<leader>ol',
 			function()
-				require("snacks").picker.lsp_symbols({
+				Snacks.picker.lsp_symbols({
 					layout = {
 						preset = 'select'
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: Document [o]ut[l]ine'
 		},
 		{
 			'<leader>wol',
 			function()
-				require("snacks").picker.lsp_workspace_symbols({
+				Snacks.picker.lsp_workspace_symbols({
 					tree = true,
 					layout = {
 						preset = 'select'
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: [W]orkspace [o]ut[l]ine'
 		},
 		{
 			'<leader>fu',
 			function()
-				require("snacks").picker.lsp_references({
+				Snacks.picker.lsp_references({
 					layout = {
 						preset = 'default'
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: [F]ind [u]sages'
 		},
 		{
 			'gd',
 			function()
-				require("snacks").picker.lsp_definitions({
+				Snacks.picker.lsp_definitions({
 					layout = {
 						preset = 'select'
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: [G]o to [d]efinition'
 		},
 		{
 			'gi',
 			function()
-				require("snacks").picker.lsp_implementations({
+				Snacks.picker.lsp_implementations({
 					layout = {
 						preset = 'select'
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: [G]o to [i]mplementations'
 		},
 		{
 			'gt',
 			function()
-				require("snacks").picker.lsp_type_definitions({
+				Snacks.picker.lsp_type_definitions({
 					layout = {
 						preset = 'select'
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: [G]o to [t]ype definition'
 		},
 		{
 			'gD',
 			function()
-				require("snacks").picker.lsp_declarations({
+				Snacks.picker.lsp_declarations({
 					layout = {
 						preset = 'select'
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: [G]o to [d]efinition'
 		},
 		{
 			'<leader>gb',
 			function()
-				require("snacks").picker.git_branches({
+				Snacks.picker.git_branches({
 					layout = {
 						preset = 'select',
 						preview = false
 					}
 				})
 			end,
-			{ 'n' },
 			desc = 'Snacks: Search [G]it [b]ranches'
 		},
 		{
 			'<leader>lg',
-			function()
-				require('snacks').lazygit()
-			end,
+			function() Snacks.lazygit() end,
 			desc = 'Snacks: Open [l]azy[g]it'
-		}
+		},
+		{
+			'<C-]>',
+			function()
+				Snacks.scope.jump({ bottom = true })
+			end,
+			desc = 'Snacks: Jump to bottom of scope'
+		},
+		{
+			'<C-[>',
+			function()
+				Snacks.scope.jump({ bottom = false })
+			end,
+			desc = 'Snacks: Jump to bottom of scope'
+		},
 	},
 }

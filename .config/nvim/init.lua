@@ -1,5 +1,3 @@
-vim.g.resume = false
-
 require("config.lazy")
 require("config.remaps")
 require("config.global_autocommands")

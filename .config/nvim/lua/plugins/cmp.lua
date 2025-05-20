@@ -39,7 +39,7 @@ return {
 				['<C-e>'] = cmp.mapping.abort(),
 				['<C-p>'] = cmp.mapping.select_prev_item({ behavior = 'select' }),
 				['<C-n>'] = cmp.mapping.select_next_item({ behavior = 'select' }),
-				['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+				['<Tab>'] = cmp.mapping.confirm({ select = true }),
 			}),
 			sources = {
 				{ name = 'nvim_lsp' },

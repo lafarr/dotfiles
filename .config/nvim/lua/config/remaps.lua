@@ -9,19 +9,10 @@ vim.keymap.set('n', '<C-i>', '<C-i>zz', { desc = 'General: Go to next item in ju
 vim.keymap.set("i", "<C-BS>", "<C-W>", { desc = 'General: Delete word backwards' })
 vim.keymap.set("i", "<C-h>", "<C-W>", { desc = 'General: Delete word backwards' })
 vim.keymap.set("n", "H", "<C-w>o", { desc = 'General: Full screen help file' })
-
--- This has a related autocommand in global_autocommands.lua
-vim.keymap.set('i', '<C-s>', function()
-	if Signature_visible and Signature_win_id ~= nil then
-		if vim.api.nvim_win_is_valid(Signature_win_id) then
-			vim.api.nvim_win_close(Signature_win_id, true)
-		end
-		Signature_visible = false
-		Signature_win_id = nil
-	else
-		vim.lsp.buf.signature_help({ focusable = false, border = 'rounded' })
-	end
-end)
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = 'General: Switch to left vertical split' })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = 'General: Switch to right vertical split' })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = 'General: Switch to bottom split' })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = 'General: Switch to top split' })
 
 vim.keymap.set('i', ')', function()
 	if vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 1, 1) == ")" then

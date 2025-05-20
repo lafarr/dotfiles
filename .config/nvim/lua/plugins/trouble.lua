@@ -1,5 +1,6 @@
 vim.g.last_opts = {}
 vim.g.prev_pos = {}
+vim.g.resume = false
 
 local workspace_diagnostics = function()
 	local opts = {

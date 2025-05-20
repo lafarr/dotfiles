@@ -57,7 +57,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		vim.keymap.set("n", "<leader>pe",
 			function() vim.diagnostic.goto_prev({ float = { border = 'rounded', source = true } }) end,
 			{ buffer = bufnr, desc = '[P]revious [E]rror' })
-		vim.keymap.set('i', '<C-k>', function() vim.lsp.buf.signature_help({ border = 'rounded', focusable = false }) end)
 
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
 		if not client then return end
@@ -117,41 +116,39 @@ vim.api.nvim_create_autocmd("WinEnter", {
 	end
 })
 
-Signature_visible = false
-Signature_win_id = nil
-
-function Is_signature_window(win_id)
-	local buf_id = vim.api.nvim_win_get_buf(win_id)
-
-	local filetype = vim.api.nvim_buf_get_option(buf_id, 'filetype')
-	if filetype == 'lsp-signature-help' then
-		return true
-	end
-
-	local lines = vim.api.nvim_buf_get_lines(buf_id, 0, -1, false)
-	local content = table.concat(lines, '\n')
-
-	if content:match("Parameters:") or content:match("%(.*%)") then
-		return true
-	end
-
-	return false
-end
-
-vim.api.nvim_create_autocmd({ "WinNew" }, {
-	callback = function()
-		vim.schedule(function()
-			local wins = vim.api.nvim_list_wins()
-			for _, win_id in ipairs(wins) do
-				if vim.api.nvim_win_is_valid(win_id) and
-					vim.api.nvim_win_get_config(win_id).relative ~= "" then
-					if Is_signature_window(win_id) then
-						Signature_win_id = win_id
-						Signature_visible = true
-						break
-					end
-				end
-			end
-		end)
-	end
-})
+-- vim.g.Signature_visible = false
+-- vim.g.Signature_win_id = nil
+--
+-- function Is_signature_window(win_id)
+-- 	local buf_id = vim.api.nvim_win_get_buf(win_id)
+--
+-- 	local filetype = vim.api.nvim_buf_get_option(buf_id, 'filetype')
+-- 	if filetype == 'lsp-signature-help' then
+-- 		return true
+-- 	end
+--
+-- 	local lines = vim.api.nvim_buf_get_lines(buf_id, 0, -1, false)
+-- 	local content = table.concat(lines, '\n')
+--
+-- 	if content:match("Parameters:") or content:match("%(.*%)") then
+-- 		return true
+-- 	end
+--
+-- 	return false
+-- end
+--
+-- vim.api.nvim_create_autocmd({ "WinNew" }, {
+-- 	callback = function()
+-- 		local wins = vim.api.nvim_list_wins()
+-- 		for _, win_id in ipairs(wins) do
+-- 			if vim.api.nvim_win_is_valid(win_id) and
+-- 				vim.api.nvim_win_get_config(win_id).relative ~= "" then
+-- 				if Is_signature_window(win_id) then
+-- 					vim.g.Signature_win_id = win_id
+-- 					vim.g.Signature_visible = true
+-- 					break
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- })

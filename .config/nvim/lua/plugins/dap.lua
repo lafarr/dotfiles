@@ -16,7 +16,6 @@ return {
 			},
 			config = function()
 				local dap = require('dap')
-
 				local debuggers_dir = vim.fn.stdpath('config') .. '/lua/config/debuggers'
 
 				for _, filename in ipairs(vim.fn.readdir(debuggers_dir)) do
@@ -52,19 +51,11 @@ return {
 				dap.continue()
 			end,
 			desc = 'Dap: Start debugging/continue to next breakpoint'
-		}
+		},
 	},
 	config = function()
 		local dap, dapui = require("dap"), require("dapui")
-
-		-- Call dapui.setup(), so we can just open without calling setup every time we run the debugger
-		vim.api.nvim_create_autocmd('VimEnter', {
-			desc = 'Setup dap-ui when entering opening vim',
-			group = vim.api.nvim_create_augroup('dap-ui-setup', { clear = true }),
-			callback = function()
-				dapui.setup()
-			end,
-		})
+		dapui.setup()
 
 		-- Close dapui automatically when debugging session terminates
 		dap.listeners.before.event_terminated.dapui_config = function()
