@@ -64,7 +64,7 @@ end
 local todos = function()
 	resume = false
 	last_opts = { is_todos = true }
-	vim.cmd('TodoTrouble focus=true')
+	vim.cmd('TodoTrouble')
 end
 
 local toggle = function()

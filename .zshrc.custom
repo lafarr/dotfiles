@@ -13,6 +13,8 @@
 # zoxide (cd)
 # lazygit
 # hexyl (hex viewer)
+# jq (json formatter)
+# jless (json viewer)
 
 function laptop() {
 	hyprctl keyword monitor eDP-1,enable 

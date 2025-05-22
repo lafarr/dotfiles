@@ -17,29 +17,29 @@ return {
 		},
 	},
 	config = function()
-		local cmp = require 'cmp'
-		local ls = require('luasnip')
-		cmp.setup({
+		local Cmp = require 'cmp'
+		local Luasnip = require('luasnip')
+		Cmp.setup({
 			snippet = {
 				expand = function(args)
-					ls.lsp_expand(args.body)
+					Luasnip.lsp_expand(args.body)
 				end,
 			},
 			completion = {
 				documentation = false,
 			},
 			window = {
-				completion = cmp.config.window.bordered(),
+				completion = Cmp.config.window.bordered(),
 				documentation = false,
 			},
-			mapping = cmp.mapping.preset.insert({
-				['<C-b>'] = cmp.mapping.scroll_docs(-4),
-				['<C-f>'] = cmp.mapping.scroll_docs(4),
-				['<C-Space>'] = cmp.mapping.complete(),
-				['<C-e>'] = cmp.mapping.abort(),
-				['<C-p>'] = cmp.mapping.select_prev_item({ behavior = 'select' }),
-				['<C-n>'] = cmp.mapping.select_next_item({ behavior = 'select' }),
-				['<Tab>'] = cmp.mapping.confirm({ select = true }),
+			mapping = Cmp.mapping.preset.insert({
+				['<C-b>'] = Cmp.mapping.scroll_docs(-4),
+				['<C-f>'] = Cmp.mapping.scroll_docs(4),
+				['<C-Space>'] = Cmp.mapping.complete(),
+				['<C-e>'] = Cmp.mapping.abort(),
+				['<C-p>'] = Cmp.mapping.select_prev_item({ behavior = 'select' }),
+				['<C-n>'] = Cmp.mapping.select_next_item({ behavior = 'select' }),
+				['<Tab>'] = Cmp.mapping.confirm({ select = true }),
 			}),
 			sources = {
 				{ name = 'nvim_lsp' },
@@ -48,17 +48,17 @@ return {
 			}
 		})
 
-		cmp.setup.cmdline({ '/', '?' }, {
-			mapping = cmp.mapping.preset.cmdline(),
+		Cmp.setup.cmdline({ '/', '?' }, {
+			mapping = Cmp.mapping.preset.cmdline(),
 			sources = {
 				{ name = 'buffer' }
 			}
 		})
 
 		-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-		cmp.setup.cmdline(':', {
-			mapping = cmp.mapping.preset.cmdline(),
-			sources = cmp.config.sources({
+		Cmp.setup.cmdline(':', {
+			mapping = Cmp.mapping.preset.cmdline(),
+			sources = Cmp.config.sources({
 				{ name = 'path' }
 			}, {
 				{ name = 'cmdline' }

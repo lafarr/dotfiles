@@ -2,6 +2,8 @@ local dapui_open = false
 
 return {
 	"rcarriga/nvim-dap-ui",
+	-- Need this for the highlights in config()
+	lazy = false,
 	dependencies = {
 		{
 			"mfussenegger/nvim-dap",
@@ -40,51 +42,35 @@ return {
 		{
 			'<F1>',
 			function()
-				local dap, dapui = require("dap"), require("dapui")
+				local Dap, Dapui = require("dap"), require("dapui")
 				if not dapui_open then
 					if vim.bo.filetype == 'cpp' then
 						vim.fn.system('cd ' .. vim.fn.getcwd() .. '/build && make')
 					end
-					dapui.open()
+					Dapui.open()
 					dapui_open = true
 				end
-				dap.continue()
+				Dap.continue()
 			end,
 			desc = 'Dap: Start debugging/continue to next breakpoint'
 		},
 	},
 	config = function()
-		local dap, dapui = require("dap"), require("dapui")
-		dapui.setup()
+		local Dap, Dapui = require("dap"), require("dapui")
+		Dapui.setup()
 
 		-- Close dapui automatically when debugging session terminates
-		dap.listeners.before.event_terminated.dapui_config = function()
-			dapui.close()
+		Dap.listeners.before.event_terminated.dapui_config = function()
+			Dapui.close()
 			dapui_open = false
 		end
-
+		--
 		vim.api.nvim_set_hl(0, "red", { fg = "#FF0000" })
 		vim.api.nvim_set_hl(0, "green", { fg = "#9ece6a" })
 		vim.api.nvim_set_hl(0, "yellow", { fg = "#FFFF00" })
 		vim.api.nvim_set_hl(0, "orange", { fg = "#f09000" })
 		vim.fn.sign_define('DapBreakpoint',
-			{ text = '⏺', texthl = 'red', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
-		vim.fn.sign_define('DapBreakpointCondition', {
-			text = '•',
-			texthl = 'blue',
-			linehl = 'DapBreakpoint',
-			numhl =
-			'DapBreakpoint'
-		})
-		vim.fn.sign_define('DapBreakpointRejected', {
-			text = '•',
-			texthl = 'orange',
-			linehl = 'DapBreakpoint',
-			numhl =
-			'DapBreakpoint'
-		})
+			{ text = '⏺', texthl = 'red' })
 		vim.fn.sign_define('DapStopped', { text = '→', texthl = 'green', linehl = 'text', numhl = 'green' })
-		vim.fn.sign_define('DapLogPoint',
-			{ text = '•', texthl = 'yellow', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
 	end
 }

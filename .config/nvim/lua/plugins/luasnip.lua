@@ -8,21 +8,21 @@ return {
 		{
 			'<C-e>',
 			function()
-				local ls = require('luasnip')
-				if ls.choice_active() then
-					ls.change_choice(1)
+				local Luasnip = require('luasnip')
+				if Luasnip.choice_active() then
+					Luasnip.change_choice(1)
 				end
 			end,
 			mode = { 'i' }
 		}
 	},
 	config = function()
-		local ls = require("luasnip")
-		local s = ls.snippet
-		local i = ls.insert_node
-		local t = ls.text_node
+		local Luasnip = require("luasnip")
+		local s = Luasnip.snippet
+		local i = Luasnip.insert_node
+		local t = Luasnip.text_node
 
-		ls.add_snippets("cs", {
+		Luasnip.add_snippets("cs", {
 			s("fi", {
 				t("for ("),
 				i(1, "declaration"),

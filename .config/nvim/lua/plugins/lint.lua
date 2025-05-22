@@ -7,17 +7,17 @@ return {
 	config = function()
 		vim.env.ESLINT_D_PPID = vim.fn.getpid()
 
-		local lint = require('lint')
+		local Lint = require('lint')
 		local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
 
 		-- So we don't get the "undefined global vim" warnings
-		local luacheck = require('lint').linters.luacheck
+		local luacheck = Lint.linters.luacheck
 		luacheck.args = {
 			'--globals',
 			'vim'
 		}
 
-		local golang = require('lint').linters.golangcilint
+		local golang = Lint.linters.golangcilint
 		golang.args = {
 			"run",
 			"--output.json.path=stdout",
@@ -26,13 +26,13 @@ return {
 			"0",
 		}
 
-		local selene = require('lint').linters.selene
+		local selene = Lint.linters.selene
 		selene.args = {
 			"--config",
 			vim.fn.stdpath('config')
 		}
 
-		lint.linters_by_ft = {
+		Lint.linters_by_ft = {
 			javascript = { 'eslint_d', 'jshint' },
 			typescript = { 'eslint_d', 'jshint' },
 			typescriptreact = { 'eslint_d', 'jshint' },
@@ -47,7 +47,7 @@ return {
 		vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
 			group = lint_augroup,
 			callback = function()
-				lint.try_lint()
+				Lint.try_lint()
 			end,
 		})
 	end,
